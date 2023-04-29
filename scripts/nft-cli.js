@@ -7,11 +7,10 @@ require('yargs/yargs')(process.argv.slice(2))
         builder: (yargs) => yargs.default('desc', ''),
         handler: (argv) => {
             console.log(`Minting new NFT for file ${argv.file} with description: ${argv.desc}`);
-            // add proper handling
-            mint('../test_files/three.xml')
+            mint(argv.file)
               .then(() => process.exit(0))
-              .catch((error) => {
-                console.error(error);
+              .catch((err) => {
+                console.log(err.message);
                 process.exit(1);
               });
         }
