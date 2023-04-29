@@ -17,6 +17,8 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.2",
     "@pinata/sdk": "^2.1.0",
-    "dotenv": "^16.0.3"
+    "argparse": "^2.0.1",
+    "dotenv": "^16.0.3",
+    "yargs": "^17.7.2"
   }
 }
