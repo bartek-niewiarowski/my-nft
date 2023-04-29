@@ -1,11 +1,19 @@
+const mint = require('./mint-nft').mint;
 require('yargs/yargs')(process.argv.slice(2))
     .command({
-        command: 'mint <file>',
+        command: 'mint <file> [desc]',
         aliases: ['mint', 'mnt'],
         desc: 'Mint a new NFT for the given file',
+        builder: (yargs) => yargs.default('desc', ''),
         handler: (argv) => {
-            console.log(`Minting new NFT for file ${argv.file}`);
+            console.log(`Minting new NFT for file ${argv.file} with description: ${argv.desc}`);
             // add proper handling
+            mint('../test_files/three.xml')
+              .then(() => process.exit(0))
+              .catch((error) => {
+                console.error(error);
+                process.exit(1);
+              });
         }
     })
     .command({
