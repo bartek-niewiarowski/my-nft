@@ -7,7 +7,7 @@ const alchemy = new Alchemy.Alchemy ({
     network: Alchemy.Network.ETH_SEPOLIA,
 });
 
-const verifyOwnership = async (address, tokenId) => {
+const verifyOwnership = async (tokenId, address) => {
     const nfts = await alchemy.nft.getNftsForOwner(address);
     for(let nft of nfts['ownedNfts']) {
         console.log(nft);

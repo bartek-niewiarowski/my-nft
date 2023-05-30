@@ -1,4 +1,7 @@
+const {verifyOwnership} = require("./check");
 const mint = require('./mint-nft').mint;
+require('dotenv').config();
+
 require('yargs/yargs')(process.argv.slice(2))
     .command({
         command: 'mint <file> [desc]',
@@ -26,12 +29,13 @@ require('yargs/yargs')(process.argv.slice(2))
         }
     })
     .command({
-        command: 'check <tokenId>',
+        command: 'check <tokenId> [walletId]',
         aliases: ['check', 'chk'],
         desc: 'Check the price/status for the given NFT',
+        builder: (yargs) => yargs.default('walletId', process.env.WALLET_ID),
         handler: (argv) => {
             console.log(`Checking listings for NFT ${argv.tokenId}`);
-            // add proper handling
+            verifyOwnership(argv.tokenId, argv.walletId).then(console.log);
         }
     })
     .command({
