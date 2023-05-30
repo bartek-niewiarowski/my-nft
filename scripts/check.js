@@ -7,16 +7,16 @@ const alchemy = new Alchemy.Alchemy ({
     network: Alchemy.Network.ETH_SEPOLIA,
 });
 
-const verifyOwnership = async (tokenId, address) => {
+exports.verifyOwnership = async (tokenId, address) => {
     const nfts = await alchemy.nft.getNftsForOwner(address);
     for(let nft of nfts['ownedNfts']) {
-        console.log(nft);
+        // console.log(nft);
         if(bignumber(nft.tokenId, 10).isEqualTo(bignumber(tokenId, 16)))
             return true;
     }
     return false;
 };
 
-exports.verifyOwnership = verifyOwnership;
+// exports.verifyOwnership = verifyOwnership;
 // works :D
 // verifyOwnership('0xCed7C68AdcE859d655CE1d4d51d7c36F68B4024E', '0486b31d357dbc8cfbf3dfcba97382d1901eb2646454efd5590a0f42234d6840').then(console.log)

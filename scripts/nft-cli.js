@@ -19,7 +19,7 @@ require('yargs/yargs')(process.argv.slice(2))
         }
     })
     .command({
-        command: 'sell <tokenId> <price>',
+        command: 'sell <tokenId> [price]',
         aliases: ['sell', 'sl'],
         desc: 'Put the NFT up for sale with the given price',
         builder: (yargs) => yargs.coerce('price', parseInt).default('price', 1),
@@ -39,7 +39,7 @@ require('yargs/yargs')(process.argv.slice(2))
         }
     })
     .command({
-        command: 'buy <tokenId> <price>',
+        command: 'buy <tokenId> [price]',
         aliases: ['buy'],
         desc: 'Buy the NFT by its ID',
         builder: (yargs) => yargs.coerce('price', parseInt).default('price', 0),
