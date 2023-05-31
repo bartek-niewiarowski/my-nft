@@ -22,7 +22,7 @@ const mintNFT = async (file, description = '') => {
   const cids = await upload(file, description);
   if(cids === undefined) return;
   const tokenUri = `https://gateway.pinata.cloud/ipfs/${cids.metadataCid}`;
-  let nftTxn = await myContract.mintNFT(signer.address, hash, tokenUri);
+  let nftTxn = await myContract.mintNFT(signer.address, hash, tokenUri, 0);
   await nftTxn.wait();
   console.log(`NFT minted at https://sepolia.etherscan.io/tx/${nftTxn.hash}`);
 }

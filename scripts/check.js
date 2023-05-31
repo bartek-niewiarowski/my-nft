@@ -19,4 +19,4 @@ exports.verifyOwnership = async (tokenId, address) => {
 
 // exports.verifyOwnership = verifyOwnership;
 // works :D
-// verifyOwnership('0xCed7C68AdcE859d655CE1d4d51d7c36F68B4024E', '0486b31d357dbc8cfbf3dfcba97382d1901eb2646454efd5590a0f42234d6840').then(console.log)
+// verifyOwnership('0486b31d357dbc8cfbf3dfcba97382d1901eb2646454efd5590a0f42234d6840', '0xCed7C68AdcE859d655CE1d4d51d7c36F68B4024E').then(console.log)

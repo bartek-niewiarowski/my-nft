@@ -1,4 +1,5 @@
-const {verifyOwnership} = require("./check");
+const {verifyOwnership} = require('./check');
+const {sellNFT, buyNFT} = require('./sell-nft')
 const mint = require('./mint-nft').mint;
 require('dotenv').config();
 
@@ -25,7 +26,12 @@ require('yargs/yargs')(process.argv.slice(2))
         builder: (yargs) => yargs.coerce('price', parseInt).default('price', 1),
         handler: (argv) => {
             console.log(`Putting NFT ${argv.tokenId} up for sale with a ${argv.price}ETH price tag`);
-            // add proper handling
+            sellNFT(argv.tokenId, argv.price)
+                .then(console.log)
+                .catch((err) => {
+                    console.log(err.message);
+                    process.exit(1);
+                });
         }
     })
     .command({
@@ -45,7 +51,12 @@ require('yargs/yargs')(process.argv.slice(2))
         builder: (yargs) => yargs.coerce('price', parseInt).default('price', 0),
         handler: (argv) => {
             console.log(`Attempting to buy NFT ${argv.tokenId} for ${argv.price}ETH`);
-            // add proper handling
+            buyNFT(argv.tokenId, argv.price)
+                .then(console.log)
+                .catch((err) => {
+                    console.log(err.message);
+                    process.exit(1);
+                });
         }
     })
     .help()
