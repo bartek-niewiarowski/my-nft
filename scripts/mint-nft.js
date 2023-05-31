@@ -1,20 +1,14 @@
 require('dotenv').config();
-const fs= require('fs');
-const crypto= require('crypto');
+const hashFile = require('hash_operations').hashFile;
 const ethers= require('ethers');
 const contract = require('../artifacts/contracts/MyNFT.sol/MyNFT.json');
 const upload = require('./file-upload').uploadNFT;
+
 
 const [ API_URL, PRIVATE_KEY, CONTRACT_ADDRESS ] = [ process.env.API_URL, process.env.PRIVATE_KEY, process.env.CONTRACT_ADDRESS ];
 const provider = new ethers.providers.JsonRpcProvider(API_URL);
 const signer = new ethers.Wallet(PRIVATE_KEY, provider);
 const myContract = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signer);
-
-const hashFile = (path, hashFunc='sha256') => {
-  const hash = crypto.createHash(hashFunc);
-  hash.update(fs.readFileSync(path));
-  return `0x${hash.digest('hex')}`;
-}
 
 const mintNFT = async (file, description = '') => {
   const hash = hashFile(file);
