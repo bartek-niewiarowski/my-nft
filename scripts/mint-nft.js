@@ -1,5 +1,5 @@
 require('dotenv').config();
-const hashFile = require('hash_operations').hashFile;
+const hashFile = require('./hash_operations').hashFile;
 const ethers= require('ethers');
 const contract = require('../artifacts/contracts/MyNFT.sol/MyNFT.json');
 const upload = require('./file-upload').uploadNFT;

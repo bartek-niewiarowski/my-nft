@@ -1,14 +1,13 @@
-
-const main = async () => {
+const deploy = async () => {
   const myNFTFactory = await ethers.getContractFactory("MyNFT");
   const myNFT = await myNFTFactory.deploy();
   console.log("Contract deployed to:", myNFT.address);
 }
 
-main()
+deploy()
   .then(() => process.exit(0))
-  .catch(error => {
-    console.error(error);
+  .catch(err => {
+    console.error(err);
     process.exit(1);
   });
     
