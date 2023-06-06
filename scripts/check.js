@@ -9,13 +9,14 @@ const alchemy = new Alchemy.Alchemy ({
 });
 
 exports.verifyOwnership = async (tokenId, address) => {
-    console.log(address);
     const tokens = await alchemy.nft.getNftsForOwner(
         address,
-        {contractAddresses: [process.env.CONTRACT_ADDRESS]}
+        {contractAddresses: [process.env.SONG_NFT_CONTRACT]}
     );
     const parsedToken = parseHash(tokenId);
     for(let token of tokens['ownedNfts']) {
+        // console.log(bignumber(token.tokenId).toString(16));
+        // console.log(parsedToken.toString(16));
         if(bignumber(token.tokenId, 10).isEqualTo(parsedToken))
             return true;
     }

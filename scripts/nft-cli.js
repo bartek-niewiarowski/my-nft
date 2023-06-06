@@ -41,9 +41,8 @@ require('yargs/yargs')(process.argv.slice(2))
         desc: 'Check the price/status for the given NFT',
         builder: (yargs) => yargs.default('walletId', process.env.WALLET_2_ID),
         handler: (argv) => {
-            if(typeof argv.walletId === "number") {
-                argv.walletId = `0x${bignumber(argv.walletId).toString(16)}`;
-            } if(!argv.walletId.startsWith('0x')) {
+            argv.walletId = `0x${bignumber(argv.walletId).toString(16)}`;
+            if(!argv.walletId.startsWith('0x')) {
                 argv.walletId = `0x${argv.walletId}`;
             }
             console.log(`Checking listings for NFT ${argv.tokenId} and ${argv.walletId}`);
@@ -61,6 +60,12 @@ require('yargs/yargs')(process.argv.slice(2))
         desc: 'Buy the NFT by its ID',
         builder: (yargs) => yargs.coerce('price', parseInt).default('price', 0),
         handler: (argv) => {
+            if(typeof argv.walletId === "number") {
+                console.log('yay');
+                argv.walletId = `0x${bignumber(argv.walletId).toString(16)}`;
+            } if(!argv.walletId.startsWith('0x')) {
+                argv.walletId = `0x${argv.walletId}`;
+            }
             console.log(`Attempting to buy NFT ${argv.tokenId} for ${argv.price}WEI`);
             buyNFT(argv.tokenId, argv.price, argv.walletId)
                 .then(console.log)
