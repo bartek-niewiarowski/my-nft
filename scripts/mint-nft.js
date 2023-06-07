@@ -27,3 +27,5 @@ const mintNFT = async (file, description = '', licensePricing) => {
 }
 
 exports.mint = mintNFT;
+
+mintNFT('../test_files/one.txt', '', [0,1,2]).catch(err => {console.error(err); process.exit(1);});

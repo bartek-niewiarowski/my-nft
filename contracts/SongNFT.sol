@@ -48,9 +48,9 @@ contract SongNFT is ERC721URIStorage, Ownable {
         nft.price = price;
 
         LicenseAvailability memory licenseInfo = LicenseAvailability({
-            Private : LicenseInfo(pricing.PrivatePrice >= 0, pricing.PublicPrice),
-            Public : LicenseInfo(pricing.PublicPrice >= 0, pricing.PublicPrice),
-            Modify : LicenseInfo(pricing.ModifyPrice >= 0, pricing.ModifyPrice)
+            Private : LicenseInfo(pricing.PrivatePrice >= 0, pricing.PrivatePrice >=0 ? uint256(pricing.PrivatePrice) : uint256(-pricing.PrivatePrice)),
+            Public : LicenseInfo(pricing.PublicPrice >= 0, pricing.PublicPrice >=0 ? uint256(pricing.PublicPrice) : uint256(-pricing.PublicPrice)),
+            Modify : LicenseInfo(pricing.ModifyPrice >= 0, pricing.ModifyPrice >=0 ? uint256(pricing.ModifyPrice) : uint256(-pricing.ModifyPrice))
         });
 
         nft.licensingOptions = licenseInfo;
