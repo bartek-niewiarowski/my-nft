@@ -24,7 +24,7 @@ require('yargs/yargs')(process.argv.slice(2))
         command: 'sell <tokenId> [price]',
         aliases: ['sell', 'sl'],
         desc: 'Put the NFT up for sale with the given price',
-        builder: (yargs) => yargs.coerce('price', parseInt).default('price', 1),
+            builder: (yargs) => yargs.coerce('price', parseInt).default('price', 1),
         handler: (argv) => {
             console.log(`Putting NFT ${argv.tokenId} up for sale with a ${argv.price}WEI price tag`);
             sellNFT(argv.tokenId, argv.price)

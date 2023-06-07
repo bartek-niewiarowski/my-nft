@@ -4,18 +4,24 @@ pragma solidity ^0.8.17;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+struct LicenseInfo {
+    bool isAvailable;
+    uint256 price;
+}
+
+struct LicenseAvailability {
+    LicenseInfo Private;
+    LicenseInfo Public;
+    LicenseInfo Modify;
+}
+
+struct PriceInfo {
+    int PrivatePrice;
+    int PublicPrice;
+    int ModifyPrice;
+}
+
 contract SongNFT is ERC721URIStorage, Ownable {
-
-    struct LicenseInfo {
-        bool isAvailable;
-        uint256 price;
-    }
-
-    struct LicenseAvailability {
-        LicenseInfo Private;
-        LicenseInfo Public;
-        LicenseInfo Modify;
-    }
 
     struct SongNFTStruct {
         uint256 id; // song hash
@@ -28,7 +34,7 @@ contract SongNFT is ERC721URIStorage, Ownable {
 
     constructor() ERC721("SongNFT", "NFT") {}
 
-    function mintNFT(address recipient, uint256 tokenId, string memory tokenURI, uint256 price)
+    function mintNFT(address recipient, uint256 tokenId, string memory tokenURI, uint256 price, PriceInfo memory pricing)
         public
         onlyOwner
         returns (uint256)
@@ -42,9 +48,9 @@ contract SongNFT is ERC721URIStorage, Ownable {
         nft.price = price;
 
         LicenseAvailability memory licenseInfo = LicenseAvailability({
-            Private : LicenseInfo(true, 1),
-            Public : LicenseInfo(true, 2),
-            Modify : LicenseInfo(true, 3)
+            Private : LicenseInfo(pricing.PrivatePrice >= 0, pricing.PublicPrice),
+            Public : LicenseInfo(pricing.PublicPrice >= 0, pricing.PublicPrice),
+            Modify : LicenseInfo(pricing.ModifyPrice >= 0, pricing.ModifyPrice)
         });
 
         nft.licensingOptions = licenseInfo;
@@ -82,4 +88,7 @@ contract SongNFT is ERC721URIStorage, Ownable {
         return nftLicenses;
     }
 
+    function getTokenOwner(uint256 tokenId) public view returns (address) {
+        return ownerOf(tokenId);
+    }
 }
