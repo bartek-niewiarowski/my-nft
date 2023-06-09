@@ -72,5 +72,10 @@ contract SongLicense is ERC721, Ownable {
         }
         return false;
     }
+
+    function getUserLicenses(address user) public view returns (LicensingInfo[] memory) {
+        return _ownerLicenses[user];
+    }
+
 }
 
