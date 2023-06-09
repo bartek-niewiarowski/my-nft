@@ -19,7 +19,7 @@ exports.checkLicensing = async (hash) => {
     }
 }
 
-exports.tokenDetails = async(hash) => {
+exports.tokenDetails = async (hash) => {
     const signer = new ethers.Wallet(PRIVATE_KEY, provider);
     const myContract = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signer);
     const parsedId = parseHash(hash).toString(10);
@@ -27,5 +27,13 @@ exports.tokenDetails = async(hash) => {
     return nftTxn.id.toHexString();
 }
 
+exports.getUserLicenses = async (walletId) => {
+    const signer = new ethers.Wallet(PRIVATE_KEY, provider);
+    const myContract = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signer);
+    let nftTxn = await myContract.getUserLicenses(walletId, {gasLimit: 100000});
+    return await nftTxn.wait();
+}
+
 // exports.checkLicensing('81113887926496370108094136735208310240630533625817621055747211475411604639272').then(console.log).catch(console.error);
-exports.tokenDetails('81113887926496370108094136735208310240630533625817621055747211475411604639272').then(console.log).catch(console.error);
+// exports.tokenDetails('81113887926496370108094136735208310240630533625817621055747211475411604639272').then(console.log).catch(console.error);
+exports.getUserLicenses(process.env.WALLET_ID).then(console.log).catch(console.error);
