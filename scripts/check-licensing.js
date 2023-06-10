@@ -1,6 +1,7 @@
 require("dotenv").config();
 const ethers = require("ethers");
 const contract = require("../artifacts/contracts/SongNFT.sol/SongNFT.json");
+const licenseContract = require("../artifacts/contracts/SongLicense.sol/SongLicense.json")
 const parseHash = require('./hash_operations').parseHash;
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
@@ -24,16 +25,18 @@ exports.tokenDetails = async (hash) => {
     const myContract = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signer);
     const parsedId = parseHash(hash).toString(10);
     let nftTxn = await myContract.getTokenDetails(parsedId, {gasLimit: 100000});
+    console.log(nftTxn);
     return nftTxn.id.toHexString();
 }
 
 exports.getUserLicenses = async (walletId) => {
     const signer = new ethers.Wallet(PRIVATE_KEY, provider);
-    const myContract = new ethers.Contract(CONTRACT_ADDRESS, contract.abi, signer);
+    const myContract = new ethers.Contract(process.env.SONG_LICENSE_CONTRACT, licenseContract.abi, signer);
     let nftTxn = await myContract.getUserLicenses(walletId, {gasLimit: 100000});
-    return await nftTxn.wait();
+    console.log(nftTxn);
+    return nftTxn;
 }
 
 // exports.checkLicensing('81113887926496370108094136735208310240630533625817621055747211475411604639272').then(console.log).catch(console.error);
 // exports.tokenDetails('81113887926496370108094136735208310240630533625817621055747211475411604639272').then(console.log).catch(console.error);
-exports.getUserLicenses(process.env.WALLET_ID).then(console.log).catch(console.error);
+exports.getUserLicenses(process.env.WALLET_2_ID).then(console.log).catch(console.error);
