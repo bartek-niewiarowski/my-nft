@@ -21,7 +21,6 @@ contract SongLicense is ERC721, Ownable {
     SongNFT private songNFTContract;
 
     constructor(address target) ERC721("SongLicense", "NFT") { songNFTContract = SongNFT(target);}
-//    constructor() ERC721("SongLicense", "NFT") { }
 
     function mintNFT(address recipient, uint256 songId, uint licenseType)
     public payable
@@ -76,6 +75,5 @@ contract SongLicense is ERC721, Ownable {
     function getUserLicenses(address user) public view returns (LicensingInfo[] memory) {
         return _ownerLicenses[user];
     }
-
 }
 
